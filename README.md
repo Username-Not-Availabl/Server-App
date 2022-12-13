@@ -9,15 +9,15 @@
 - All clients connect to each others public ip address
 - All clients host on their private ip addresses
 
-` 
-import requests
-_public_ip_address = requests.get('https://api.ipify.org').text
+    import requests
+    _public_ip_address = requests.get(\'https://api.ipify.org').text
 
-Server = StreamingServer(_local_ip_address, streaming_PORT)
-Client = CameraClient(_public_ip_address, listening_PORT)
-`
+    Server = StreamingServer(_local_ip_address, streaming_PORT)
+    Client = CameraClient(_public_ip_address, listening_PORT)
+
 
 listening_PORT = 9999 |-> Should be different for each script
+
 Streaming_PORT = 8888 |-> Should be different for each script [^footnote]
 [^footnote]: The ports should be flipped if communicating with each other
 
