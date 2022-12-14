@@ -66,27 +66,51 @@ def start_audio_stream():
     audio_sending_thread.start()
 
 
+# from functools import partial
+# import inspect
+
 # GUI
-window = tk.Tk()
-window.title("Application v0.0.0 Alpha")
-window.geometry("300x200")
+import customtkinter
+from GUI import GUI
 
-label_target_ip = tk.Label(window, text="Target IP:")
-label_target_ip.pack()
 
-text_target_ip = tk.Text(window, height=1)
-text_target_ip.pack()
+GUI.init(dimensions=(500, 350))
+frame = GUI.attach(customtkinter.CTkFrame, master=GUI.instance)._with(pady=20, padx=60, fill="both", expand=True)
 
-btn_listen = tk.Button(window, text="Start Listening", width=50, command=start_listening)
-btn_listen.pack(anchor=tk.CENTER, expand=True)
+label = GUI.attach(customtkinter.CTkLabel, master=frame, text="Login System")._with(pady=12, padx=10)
 
-btn_camera = tk.Button(window, text="Start Camera Stream", width=50, command=start_camera_stream)
-btn_camera.pack(anchor=tk.CENTER, expand=True)
+username = GUI.attach(customtkinter.CTkEntry, master=frame, placeholder_text="Username")._with(pady=12, padx=10)
+password = GUI.attach(customtkinter.CTkEntry, master=frame, placeholder_text="Password", show="*")._with(pady=12, padx=10)
 
-btn_screen = tk.Button(window, text="Start Screen Sharing", width=50, command=start_screen_sharing)
-btn_screen.pack(anchor=tk.CENTER, expand=True)
+def login():
+    print("Logged in")
 
-btn_audio = tk.Button(window, text="Start Audio Stream", width=50, command=start_audio_stream)
-btn_audio.pack(anchor=tk.CENTER, expand=True)
+button = GUI.attach(customtkinter.CTkButton, master=frame, text="Login", command=login)._with(pady=12, padx=10)
 
-window.mainloop()
+checkbox = GUI.attach(customtkinter.CTkCheckBox, master=frame, text="Remember Me")._with(pady=12, padx=10)
+
+GUI.run()
+
+# window = tk.Tk()
+# window.title("Application v0.0.0 Alpha")
+# window.geometry("300x200")
+
+# label_target_ip = tk.Label(window, text="Target IP:")
+# label_target_ip.pack()
+
+# text_target_ip = tk.Text(window, height=1)
+# text_target_ip.pack()
+
+# btn_listen = tk.Button(window, text="Start Listening", width=50, command=start_listening)
+# btn_listen.pack(anchor=tk.CENTER, expand=True)
+
+# btn_camera = tk.Button(window, text="Start Camera Stream", width=50, command=start_camera_stream)
+# btn_camera.pack(anchor=tk.CENTER, expand=True)
+
+# btn_screen = tk.Button(window, text="Start Screen Sharing", width=50, command=start_screen_sharing)
+# btn_screen.pack(anchor=tk.CENTER, expand=True)
+
+# btn_audio = tk.Button(window, text="Start Audio Stream", width=50, command=start_audio_stream)
+# btn_audio.pack(anchor=tk.CENTER, expand=True)
+
+# window.mainloop()
