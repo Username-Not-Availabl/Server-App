@@ -28,6 +28,10 @@ class Server:
     def set_destination(destination):
         Server.destination_ip_address = destination
 
+    camera_client = None
+    screen_share_client = None
+    audio_broadcast_client = None
+
     @staticmethod
     def listen(streaming_PORT = 9999, listening_PORT = 8888):
         streaming_thread = threading.Thread(target=Server.broadcaster(streaming_PORT).start_server)
@@ -37,24 +41,24 @@ class Server:
     
     @staticmethod
     def stream_camera():
-        camera_client = CameraClient(Server.destination_ip_address, Server.foreign_streaming_PORT)
+        Server.camera_client = CameraClient(Server.destination_ip_address, Server.foreign_streaming_PORT)
     #   ^
     #   It is defined here so whenever the button is clicked we restart the Camera client connection
-        camera_client_thread = threading.Thread(target=camera_client.start_stream)
+        camera_client_thread = threading.Thread(target=Server.camera_client.start_stream)
         camera_client_thread.start()
 
     @staticmethod
     def stream_screen():
-        screen_share_client = ScreenShareClient(Server.destination_ip_address, Server.foreign_streaming_PORT)
+        Server.screen_share_client = ScreenShareClient(Server.destination_ip_address, Server.foreign_streaming_PORT)
     #   ^
     #   It is defined here so whenever the button is clicked we restart the Screen client connection
-        screen_share_client_thread = threading.Thread(target=screen_share_client.start_stream)
+        screen_share_client_thread = threading.Thread(target=Server.screen_share_client.start_stream)
         screen_share_client_thread.start()
     
     @staticmethod
     def stream_audio():
-        audio_broadcast_client = AudioSender(Server.destination_ip_address, Server.foreign_audio_PORT)
+        Server.audio_broadcast_client = AudioSender(Server.destination_ip_address, Server.foreign_audio_PORT)
     #   ^
     #   It is defined here so whenever the button is clicked we restart the Audio client connection
-        audio_broadcast_client_thread = threading.Thread(target=audio_broadcast_client.start_stream)
+        audio_broadcast_client_thread = threading.Thread(target=Server.audio_broadcast_client.start_stream)
         audio_broadcast_client_thread.start()
