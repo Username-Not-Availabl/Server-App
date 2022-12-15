@@ -16,10 +16,6 @@ import tkinter as tk
 
 from Server import Server
 
-Server.foreign_streaming_PORT = 9999
-Server.foreign_audio_PORT = 8888
-
-
 def start_listening():
     connection()
     exit()
@@ -40,6 +36,7 @@ def login():
 
     def handle_login():
         GUI.instance.destroy()
+        #TODO: Actually Implement login logic
         connect()
 
     _button = GUI.attach(customtkinter.CTkButton, master=frame, text="Login", command=handle_login)._with(pady=12, padx=10)
@@ -47,7 +44,7 @@ def login():
     GUI.run()
 
 def connect():
-    GUI.init(title = "Test Recipient", dimensions=(300, 200))
+    GUI.init(dimensions=(300, 200))
     frame = GUI.attach(customtkinter.CTkFrame, master=GUI.instance)._with(pady=20, padx=60, fill="both", expand=True)
 
     _label = GUI.attach(customtkinter.CTkLabel, master=frame, text="Input Target IP")._with(pady=6, padx=10)
@@ -63,10 +60,10 @@ def connection():
     if target_IP.get() != '':
         #TODO: Perform more checks to see if IP is valid and within usable range
         Server.set_destination(target_IP.get())
-    
-    Server.listen(7777, 6666)
 
-    GUI.init(title = "Test Recipient", dimensions=(300, 150))
+    Server.listen()
+
+    GUI.init(dimensions=(300, 150))
     frame = GUI.attach(customtkinter.CTkFrame, master=GUI.instance)._with(pady=15, padx=60, fill="both", expand=True)
     
     btn_camera = GUI.attach(customtkinter.CTkButton, master=frame, text="Start Camera Stream", command=Server.stream_camera)._with(anchor=tk.N, pady=6, padx=10)
